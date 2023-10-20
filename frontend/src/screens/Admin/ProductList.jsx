@@ -26,13 +26,13 @@ function ProductList() {
       const result = await deleteProduct(id)
       toast.success(result.message)
       refetch()
-    } catch (error) {
+    } catch (err) {
       toast.error(err?.data?.message || err.message)
     }
   }
 
 
-  const [createProduct , {isLoading = loadingCreate }] = useCreateProductMutation()
+  const [createProduct , {isLoading : loadingCreate }] = useCreateProductMutation()
 
   const navigate = useNavigate()
 
@@ -57,6 +57,7 @@ function ProductList() {
           <Button className="btn-sm m3" onClick={handleCreate}>
             <FaEdit /> Create Product
           </Button>
+          {loadingCreate && <Spinner />}
         </Col>
       </Row>
       {loadingProduct ? (

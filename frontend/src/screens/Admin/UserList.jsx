@@ -29,7 +29,7 @@ function UserList() {
       const result = await deleteUser(id);
       toast.success(result.message);
       refetch();
-    } catch (error) {
+    } catch (err) {
       toast.error(err?.data?.message || err.message);
     }
   };
@@ -42,7 +42,7 @@ function UserList() {
       const updatedUser = await updateUser(id);
       toast.success(updatedUser.message);
       refetch();
-    } catch (error) {
+    } catch (err) {
       toast.err(err?.data?.message || err.message);
     }
   };

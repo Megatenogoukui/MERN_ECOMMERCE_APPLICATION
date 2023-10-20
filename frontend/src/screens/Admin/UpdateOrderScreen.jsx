@@ -84,7 +84,7 @@ export const UpdateOrderScreen = () => {
   
   return <>
   <Link to = '/admin/productlist' className="btn btn-light my-3">Go back</Link>
-    {isLoading ?<Spinner /> : error ? <Message variant='danger'>{err?.data?.message || err.error}</Message> : (
+    {isLoading ?<Spinner /> : error ? <Message variant='danger'>{error?.data?.message || error.error}</Message> : (
         <FormContainer>
         <h1>Edit Products</h1>
         <Form  onSubmit = {submitHandler}>
