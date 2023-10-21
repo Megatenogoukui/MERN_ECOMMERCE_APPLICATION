@@ -14,7 +14,7 @@ function OrderList() {
         <h1>Orders</h1>
         {
         isLoading ? <Spinner /> : error ? <Message variant='danger'>{error?.data?.message || error?.error}</Message>:(
-            <Table striped hover reaponsive className='table-sm'>
+            <Table striped hover responsive className='table-sm'>
                 <thead>
                     <tr>
                         <th>ID</th>
