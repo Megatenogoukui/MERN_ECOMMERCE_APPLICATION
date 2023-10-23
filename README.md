@@ -45,6 +45,22 @@ To destroy data:
 
 - This script runs `seeder.js` with the `-d` flag to destroy data.
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+Special thanks to the creators of the libraries and tools used in this project.
+
+## Learn More
+
+For more information on the tools and technologies used in this project, refer to their documentation:
+
+- [React](https://reactjs.org/docs/getting-started.html)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
+
 ## Prerequisites
 
 Before running the application, make sure you have the required dependencies installed.
@@ -53,18 +69,5 @@ Before running the application, make sure you have the required dependencies ins
 npm install
 
 
-**License**
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-**Acknowledgments**
-
-Special thanks to the creators of the libraries and tools used in this project.
-
-**Learn More**
-
-For more information on the tools and technologies used in this project, refer to their documentation:
-
-- [**React**](https://reactjs.org/docs/getting-started.html)
-- [**Redux Toolkit**](https://redux-toolkit.js.org/)
-- [**Create React App**](https://reactjs.org/docs/create-a-new-react-app.html)
