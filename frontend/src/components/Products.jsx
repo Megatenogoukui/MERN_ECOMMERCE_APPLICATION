@@ -20,7 +20,7 @@ function Products({ product }) {
             <Ratings ratings={product.rating} noOfReviews={product.numReviews} />
           </Card.Text>
           <Card.Text as="h3">
-            <p>Price : $ {product.price}</p>
+            <p>Price : ₹ {product.price}</p>
           </Card.Text>
         </Card.Body>
       </Card>

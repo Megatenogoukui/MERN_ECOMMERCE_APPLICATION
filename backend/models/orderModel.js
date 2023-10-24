@@ -1,6 +1,6 @@
 import mongoose, { Mongoose } from "mongoose";
 
-
+//Creating a schema for users
 const orderSchema = new mongoose.Schema({
     user : {
         type : mongoose.Schema.Types.ObjectId,
@@ -75,6 +75,6 @@ const orderSchema = new mongoose.Schema({
 });
 
 
-
+//Create a model for the above schema
 const Order = mongoose.model("Order" ,orderSchema)
 export default Order

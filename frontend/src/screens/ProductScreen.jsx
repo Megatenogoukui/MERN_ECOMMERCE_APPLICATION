@@ -19,10 +19,14 @@ import {toast} from 'react-toastify'
 import Meta from "../components/Meta";
 
 function ProductScreen() {
+  //Getting id from the URL
   const { id: productId } = useParams();
+  
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  
+  //Getting the Individual Product Details from Backend :GET api/products/:id 
   const {
     data: product,
     isLoading,
@@ -90,10 +94,10 @@ function ProductScreen() {
                     />
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <p> DESCRIPTION : $ {product.description}</p>
+                    <p> DESCRIPTION : {product.description}</p>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <p> PRICE : $ {product.price}</p>
+                    <p> PRICE : ₹ {product.price}</p>
                   </ListGroup.Item>
                 </ListGroup>
               </Col>
@@ -103,7 +107,7 @@ function ProductScreen() {
                     <ListGroup.Item>
                       <Row>
                         <Col>PRICE : </Col>
-                        <Col> $ {product.countInStock}</Col>
+                        <Col> {product.countInStock}</Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item>

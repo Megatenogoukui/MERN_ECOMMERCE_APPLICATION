@@ -6,11 +6,14 @@ import asyncHandler from "./asyncHandler.js";
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
+
+  //Getting the token 
   token = req.cookies.jwt;
 
   if (token) {
     try {
       const decoded =  jwt.verify(token, process.env.JWT_SECRET);
+      //If the user is verified we will add the user in the request annd call the next middle ware
       req.user = await User.findById(decoded.userId).select("-password");
       next();
     } catch {

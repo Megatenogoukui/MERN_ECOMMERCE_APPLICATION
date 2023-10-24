@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-
+//Creating a schema for users
 const reviewSchema = new mongoose.Schema({
     user : {
         type : mongoose.Schema.Types.ObjectId,
@@ -70,6 +70,6 @@ const productSchema = new mongoose.Schema({
     timestamps : true
 });
 
-
+//Create a model for the above schema
 const Product = mongoose.model("Product" , productSchema)
 export default Product

@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table, Form ,Button, Spinner } from "react-bootstrap";
+import { Row, Col, Table, Form, Button, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useUserProfileMutation } from "../slices/usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setCredentials } from "../slices/authSlice";
 import { useGetMyOrderQuery } from "../slices/orderSlice";
-import {FaTimes} from 'react-icons/fa'
-import Message from '../components/Message'
-import {LinkContainer} from 'react-router-bootstrap'
+import { FaTimes } from "react-icons/fa";
+import Message from "../components/Message";
+import { LinkContainer } from "react-router-bootstrap";
+
 function UserProfile() {
+  // Get user information from Redux store
   const { userInfo } = useSelector((state) => state.auth);
 
+  // Initialize state variables for user information
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,33 +22,38 @@ function UserProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [updateProfile , {isLoading : updateProfileLoading}] = useUserProfileMutation()
-  const {data: orders , isLoading ,error } = useGetMyOrderQuery()
-  console.log(orders)
-  const submitHandler = async(e) =>{
-    e.preventDefault()
-    if (password !== confirmPassword){
-      toast.error("Password doesnot match")
-    }else{
-      try {
-        const res = await updateProfile({id: userInfo._id , email , name , password}).unwrap()
-    dispatch(setCredentials(res))
-    toast.success("Profile Updated")
-      } catch (err) {
-        toast.error(err?.data?.message || err.error)
-      }
-      
+  // Fetch user orders from the server
+  const { data: orders, isLoading, error } = useGetMyOrderQuery();
 
+  // Handle form submission to update user profile
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Password does not match");
+    } else {
+      try {
+        // Send a request to update the user profile
+        const res = await updateProfile({
+          id: userInfo._id,
+          email,
+          name,
+          password,
+        }).unwrap();
+        dispatch(setCredentials(res));
+        toast.success("Profile Updated");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
-  }
+  };
 
   useEffect(() => {
-    if(userInfo){
+    // Populate user information when the component loads
+    if (userInfo) {
       setName(userInfo.name);
       setEmail(userInfo.email);
     }
-   
-  }, [userInfo,userInfo.name, userInfo.email]);
+  }, [userInfo, userInfo.name, userInfo.email]);
 
   return (
     <div>
@@ -89,14 +97,22 @@ function UserProfile() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            <Button variant = 'primary' type = 'submit'>Update</Button>
-            {updateProfileLoading && <Spinner  className="mx-4"/>}
+            <Button variant="primary" type="submit">
+              Update
+            </Button>
+            {updateProfileLoading && <Spinner className="mx-4" />}
           </Form>
         </Col>
         <Col md={9}>
           <h1>My Orders</h1>
-          {isLoading ? <Spinner /> : error? <Message variant = 'danger'>{error?.data?.message || error.message}</Message> : (
-            <Table striped hover responsive className="table-sm" >
+          {isLoading ? (
+            <Spinner />
+          ) : error ? (
+            <Message variant="danger">
+              {error?.data?.message || error.message}
+            </Message>
+          ) : (
+            <Table striped hover responsive className="table-sm">
               <thead>
                 <tr>
                   <td>ID</td>
@@ -108,24 +124,42 @@ function UserProfile() {
                 </tr>
               </thead>
               <tbody>
-                {orders && orders.map((item,index) => {
-                  return <tr key={index}>
-                    <td>{item._id}</td>
-                    <td>{item.createdAt.substring(0,10)}</td>
-                    <td>{item.totalPrice}</td>
-                    <td>  {item.isPaid ? item.paidAt.substring(0,10) : <FaTimes style={{color : 'red'}}/> } </td>
-                    <td>  {item.isDelivered ? item.deliveredAt.substring(0,10) : <FaTimes style={{color : 'red'}}/> } </td>
-                    <td>
-                      <LinkContainer to ={`/order/${item._id}`}>
-                      <Button className="btn-sm" variant="light">Details</Button>
-                      </LinkContainer>
-                    </td>
-                  </tr>
-                })}
+                {orders &&
+                  orders.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{item._id}</td>
+                        <td>{item.createdAt.substring(0, 10)}</td>
+                        <td>{item.totalPrice}</td>
+                        <td>
+                          {" "}
+                          {item.isPaid ? (
+                            item.paidAt.substring(0, 10)
+                          ) : (
+                            <FaTimes style={{ color: "red" }} />
+                          )}
+                        </td>
+                        <td>
+                          {" "}
+                          {item.isDelivered ? (
+                            item.deliveredAt.substring(0, 10)
+                          ) : (
+                            <FaTimes style={{ color: "red" }} />
+                          )}
+                        </td>
+                        <td>
+                          <LinkContainer to={`/order/${item._id}`}>
+                            <Button className="btn-sm" variant="light">
+                              Details
+                            </Button>
+                          </LinkContainer>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </Table>
           )}
-          
         </Col>
       </Row>
     </div>

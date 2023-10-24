@@ -12,24 +12,35 @@ const getProducts = asyncHandler(async (req, res) => {
     : {};
 
   const count = await Product.countDocuments({ ...keyword });
+
+  //Getting the Product from the database
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
+  
+  // If Product found then respond by sending the Product
   if (products) {
     return res.json({ products, page, pages: Math.ceil(count / pageSize) });
   }
-  res.status(404).json({ message: "No products" });
+  // Else Throw error 
+  res.status(404);
+  throw new Error("Product not found");
 });
 
 // @des Fetch a Product
 // @route  GET /api/products/:id
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
+
+  //Getting the Product from the database with the specified id
   const product = await Product.findById(req.params.id);
+
+  // If Product found then respond by sending the Product
   if (product) {
     return res.json(product);
   }
+
+  // Else Throw error 
   res.status(404);
   throw new Error("Product not found");
 });
